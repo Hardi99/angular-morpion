@@ -1,0 +1,27 @@
+<div class="game-container">
+    <div class="pieces left">
+        <ng-container *ngFor="let p of leftPieces()">
+            <div *ngIf="!p.placed" class="piece circle" draggable="true" (dragstart)="onDragStart($event, p.id, 'circle')"></div>
+        </ng-container>
+    </div>
+
+    <div class="board">
+        <div *ngFor="let row of board(); let y = index" class="row">
+            <div
+                *ngFor="let cell of row; let x = index"
+                class="cell"
+                (drop)="onDrop($event, x, y)"
+                (dragover)="allowDrop($event)"
+            >
+                <div *ngIf="cell === 'circle'" class="piece circle" draggable="true" (dragstart)="onDragStart($event, 'grid', 'circle')"></div>
+                <div *ngIf="cell === 'square'" class="piece square" draggable="true" (dragstart)="onDragStart($event, 'grid', 'square')"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="pieces right">
+        <ng-container *ngFor="let p of rightPieces()">
+            <div *ngIf="!p.placed" class="piece square" draggable="true" (dragstart)="onDragStart($event, p.id, 'square')"></div>
+        </ng-container>
+    </div>
+</div>

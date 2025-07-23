@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+.victory-rain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 9999;
+}
+
+.joy {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    opacity: 0.8;
+    animation: fall 2s linear infinite;
+}
+
+.joy.circle {
+    background-color: red;
+}
+
+.joy.square {
+    background-color: blue;
+    border-radius: 0;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
+}
