@@ -49,7 +49,7 @@ export class PeerGameConnectionService {
     await this.firestore.writeData(`games/${playId}`, {offer, answer});
   }
 
-  async completeConnection(): Promise<void> {
+  async completeConnection() {
     this.firestore.onData(`games/${this.playId}`, async (data) => {
       if (data['answer'] && !this.rtcConn.currentRemoteDescription) {
         await this.rtcConn.setRemoteDescription(data['answer']);
@@ -57,7 +57,7 @@ export class PeerGameConnectionService {
     });
   }
 
-  private setupICE() {
+  private setupICE(): void {
     this.rtcConn.addEventListener('icecandidate', async (event) => {
       if (event.candidate) {
         const iceCandidateData = {
@@ -89,6 +89,7 @@ export class PeerGameConnectionService {
               {id: '-1', to: {x: -1, y: -1}, type: null}});
             this.dataChannel?.addEventListener('message', (event) => {
               const parsed = JSON.parse(event.data);
+              console.log('Received move:', parsed);
               lastMove.set({value: parsed});
             });
             resolve(lastMove);

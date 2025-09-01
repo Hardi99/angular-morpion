@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgFor, NgIf } from '@angular/common';
 import { Component, effect, Inject, inject, Renderer2, untracked } from '@angular/core';
 import { MorpionBoardService } from '../morpion-board.service';
 import { PeerGameConnectionService } from '../peer-game-connection.service';
@@ -6,7 +6,7 @@ import { PieceMove } from '../firestore.service';
 
 @Component({
   selector: 'app-morpion',
-  imports: [CommonModule],
+  imports: [NgFor, NgIf],
   templateUrl: './morpion.component.html',
   standalone: true,
   styleUrl: './morpion.component.scss'
@@ -22,6 +22,9 @@ export class MorpionComponent {
   @Inject(DOCUMENT) private document: Document = inject(DOCUMENT);
   private renderer = inject(Renderer2)
 
+  // Ajout d'une propriété playId accessible dans le composant
+  playId: string | null = null;
+
   constructor() {
     effect(() => {
       if(!this.peerService.isDataChannelOn()) return;
@@ -33,6 +36,10 @@ export class MorpionComponent {
         if (winner) this.showVictoryAnimation(winner);
       })
     })
+    // Récupération du playId depuis le service si disponible
+    if ((this.peerService as any).playId) {
+      this.playId = (this.peerService as any).playId;
+    }
   }
 
   /* Grâce à allowDrop, on annule le comportement par défaut et ainsi on superposer le type su le plateau de jeu */

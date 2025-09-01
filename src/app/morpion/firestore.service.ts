@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp, FirebaseOptions } from 'firebase/app';
+import { getAnalytics } from "firebase/analytics";
 import { doc, Firestore, getDoc, getFirestore, onSnapshot, setDoc, Unsubscribe } from 'firebase/firestore';
 
 @Injectable({
@@ -39,11 +40,18 @@ export interface PieceMove {
   type: 'square' | 'circle' | null;
 }
 
-export const firebaseConfig = {
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
   apiKey: "AIzaSyAK_aQ1uJcV6I5ekUlHlV0bqFQylvHDSFY",
   authDomain: "angular-morpion.firebaseapp.com",
+  databaseURL: "https://angular-morpion-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "angular-morpion",
   storageBucket: "angular-morpion.firebasestorage.app",
   messagingSenderId: "290089299819",
   appId: "1:290089299819:web:2e046ad3edb574715ae62e",
+  measurementId: "G-X31MRJZRL2"
 };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

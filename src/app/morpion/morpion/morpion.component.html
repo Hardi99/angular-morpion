@@ -1,3 +1,9 @@
+<!-- Bouton de partage du lien de la partie -->
+<div *ngIf="playId">
+    <a [href]="'/?playId=' + playId" target="_blank" rel="noopener noreferrer">
+        Ouvrir ce jeu dans un nouvel onglet (playId: {{ playId }})
+    </a>
+</div>
 <div class="game-container">
     <div class="pieces left">
         <ng-container *ngFor="let p of leftPieces()">
@@ -25,3 +31,4 @@
         </ng-container>
     </div>
 </div>
+
